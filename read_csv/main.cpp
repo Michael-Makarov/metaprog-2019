@@ -4,21 +4,6 @@
 #include <vector>
 #include <sstream>
 
-//struct NullType {};
-//
-//template<class T, class ...U>
-//struct TypeList
-//{
-//    using head = T;
-//    using tail = TypeList<U...>;
-//};
-//
-//template <class T>
-//struct TypeList<T> {
-//    using head = T;
-//    using tail = NullType;
-//};
-
 template <class T>
 std::tuple<T> ReadLine(std::istream& in) {
     T value;
@@ -36,7 +21,8 @@ std::tuple<T, T1, U...> ReadLine(std::istream& in) {
 }
 
 template <class ...U>
-std::vector<std::tuple<U...>> Read(std::istream& in) {
+std::vector<std::tuple<U...>> ReadCSV(const std::string& filename) {
+    std::ifstream in(filename);
     std::vector<std::tuple<U...>> res;
     std::string s;
     while (std::getline(in, s)) {
@@ -71,8 +57,7 @@ void print(const std::tuple<Args...>& t)
 }
 
 int main() {
-    std::ifstream f("data.csv");
-    auto v = Read<int, double, int>(f);
+    auto v = ReadCSV<int, double, char>("data.csv");
     for (auto& w : v) {
         print(w);
         std::cout << std::endl;
